@@ -1,5 +1,6 @@
 node {
   stage("ECHO") {
-    sh "echo app-backend"
+    sh "npm install"
+    sh "npm test"
   }
 }
