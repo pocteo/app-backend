@@ -5,6 +5,6 @@ node {
 
   stage("Run unit tests") {
     sh "npm install"
-    sh "npm test
+    sh "npm test"
   }
 }
