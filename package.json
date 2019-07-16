@@ -2,9 +2,10 @@
   "name": "app-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.test.js",
   "scripts": {
-    "test": "mocha *.test.js"
+    "test": "mocha *.test.js",  
+    "start": "node app.test.js"
   },
   "repository": {
     "type": "git",
