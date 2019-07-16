@@ -1,7 +1,7 @@
 node{
 def Namespace = "default"
 def ImageName = "majdmn/node-back"
-def Creds = "..."
+def Creds = "docker-hub"
 try{
 stage('Checkout'){
     git 'https://github.com/majdas007/app-backend'
@@ -20,12 +20,7 @@ stage('Docker Build, Push'){
     sh "docker push ${ImageName}"
    }
 }
-  stage('Deploy on K8s'){
-    sh "ansible-playbook /var/lib/jenkins/playbook.yml  --user=jenkins --extra-vars ImageName=${ImageName} --extra-vars imageTag=${imageTag} --extra-vars Namespace=${Namespace}"
-  }
-  stage('Get K8S information') {
-    sh "kubectl get svc -n ${Namespace} -o wide"
-  }
+  
 } catch (err) {
     currentBuild.result = 'FAILURE'
 }
