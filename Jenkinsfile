@@ -2,6 +2,7 @@ node{
 def Namespace = "default"
 def ImageName = "majdmn/node-back"
 def Creds = "docker-hub"
+def workspace = pwd()
 try{
 stage('Checkout'){
     git 'https://github.com/majdas007/app-backend'
@@ -21,7 +22,7 @@ stage('Docker Build, Push'){
    }
 }
  stage('Deploy on K8s'){
-    sh "docker run -it --rm --name tpm-ansible-helm -v ${"\$pwd"}:/ansible/playbooks pocteo/ansible-helm /var/lib/jenkins/playbook.yml  --user=jenkins --extra-vars ImageName=${ImageName} --extra-vars imageTag=${imageTag} --extra-vars Namespace=${Namespace}"
+    sh "docker run -it --rm --name tpm-ansible-helm -v ${workspace}:/ansible/playbooks pocteo/ansible-helm /var/lib/jenkins/playbook.yml  --user=jenkins --extra-vars ImageName=${ImageName} --extra-vars imageTag=${imageTag} --extra-vars Namespace=${Namespace}"
   }  
 } catch (err) {
     currentBuild.result = 'FAILURE'
