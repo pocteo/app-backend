@@ -21,7 +21,11 @@ stage('Docker Build, Push'){
    }
 }
  stage('Deploy on K8s'){
-sh "docker run -i --rm --name tpm-ansible-helm -v /var/lib/jenkins/ansible:/ansible/playbooks pocteo/ansible-helm playbook.yml  --user=jenkins --extra-vars ImageName=${ImageName} --extra-vars imageTag=${imageTag} --extra-vars Namespace=${Namespace}"  }  
+sh "docker run -i --rm --name tpm-ansible-helm -v /var/lib/jenkins/ansible:/ansible/playbooks pocteo/ansible-helm playbook.yml  --user=jenkins --extra-vars ImageName=${ImageName} --extra-vars imageTag=${imageTag} --extra-vars Namespace=${Namespace}"  
+ }  
+ stage('Get K8S information') {
+  sh "kubectl get svc -n ${Namespace} -o wide"
+ }
 } catch (err) {
     currentBuild.result = 'FAILURE'
 }
